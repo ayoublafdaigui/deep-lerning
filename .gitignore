@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+venv/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Models & figures (large files — regenerables)
+models/*.pt
+models/*.pth
+figures/*.png
+figures/*.jpg
+
+# Data downloaded at runtime
+data/fra-eng/
+data/*.zip
+
+# OS
+.DS_Store
+Thumbs.db
