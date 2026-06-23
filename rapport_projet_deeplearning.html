@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rapport – Projet Deep Learning EMSI 2025-2026</title>
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 11.5pt;
+      line-height: 1.65;
+      color: #1a1a1a;
+      background: #f0f0f0;
+    }
+
+    /* ============================================================
+       PAGE SIMULATION
+    ============================================================ */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 12mm auto;
+      background: #ffffff;
+      padding: 25mm 25mm 20mm 25mm;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+      page-break-after: always;
+      position: relative;
+    }
+
+    /* ============================================================
+       COVER PAGE
+    ============================================================ */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 297mm;
+      padding: 15mm 20mm;
+      background: linear-gradient(160deg, #0a1628 0%, #1a3a6b 50%, #0d2444 100%);
+      color: #ffffff;
+    }
+
+    .cover .institution-logo {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: 3px solid rgba(255,255,255,0.4);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 10px;
+      font-size: 28px; font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .cover .institution {
+      font-size: 13pt;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #c8d8f5;
+      margin-bottom: 6px;
+    }
+    .cover .department {
+      font-size: 10.5pt;
+      color: rgba(200,216,245,0.75);
+      margin-bottom: 30px;
+    }
+
+    .cover hr.divider {
+      border: none;
+      border-top: 2px solid rgba(255,255,255,0.25);
+      width: 80%;
+      margin: 0 auto 30px;
+    }
+
+    .cover .report-type {
+      font-size: 10pt;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #a8bfe0;
+      margin-bottom: 12px;
+    }
+
+    .cover h1 {
+      font-size: 22pt;
+      font-weight: 900;
+      line-height: 1.25;
+      color: #ffffff;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .cover .subtitle {
+      font-size: 12.5pt;
+      color: #c8d8f5;
+      font-style: italic;
+      margin-bottom: 30px;
+    }
+
+    .cover hr.divider2 {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      width: 60%;
+      margin: 0 auto 30px;
+    }
+
+    .cover .badge-row {
+      display: flex; gap: 14px; justify-content: center;
+      margin-bottom: 30px; flex-wrap: wrap;
+    }
+    .cover .badge {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 9pt;
+      color: #d0e0ff;
+      letter-spacing: 1px;
+    }
+
+    .cover .author-block {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      padding: 18px 36px;
+      margin-bottom: 30px;
+    }
+    .cover .author-block .label {
+      font-size: 8.5pt; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(200,216,245,0.6); margin-bottom: 8px;
+    }
+    .cover .author-block .name {
+      font-size: 16pt; font-weight: 700; color: #ffffff; letter-spacing: 1px;
+    }
+    .cover .author-block .email {
+      font-size: 9pt; color: rgba(200,216,245,0.6); margin-top: 4px;
+    }
+
+    .cover .footer-info {
+      font-size: 9pt; color: rgba(200,216,245,0.5);
+    }
+
+    /* ============================================================
+       HEADERS & RUNNING HEAD
+    ============================================================ */
+    .running-head {
+      font-size: 8pt;
+      color: #888;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-bottom: 0.5pt solid #ddd;
+      padding-bottom: 4px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .page-footer {
+      position: absolute;
+      bottom: 12mm; left: 25mm; right: 25mm;
+      font-size: 8pt; color: #aaa;
+      display: flex; justify-content: space-between;
+      border-top: 0.5pt solid #e0e0e0;
+      padding-top: 5px;
+    }
+
+    /* ============================================================
+       ABSTRACT PAGE
+    ============================================================ */
+    .abstract-box {
+      background: #f7f9fc;
+      border-left: 4px solid #1a3a6b;
+      border-radius: 0 8px 8px 0;
+      padding: 18px 20px;
+      margin: 20px 0;
+    }
+    .abstract-box h2 {
+      font-size: 11pt; letter-spacing: 2px; text-transform: uppercase;
+      color: #1a3a6b; margin-bottom: 10px;
+    }
+    .abstract-box p {
+      text-align: justify; font-style: italic; font-size: 10.5pt; color: #333;
+    }
+
+    .keywords-box {
+      margin-top: 14px;
+      font-size: 9.5pt;
+    }
+    .keywords-box span.label {
+      font-weight: 700; color: #1a3a6b;
+    }
+
+    /* ============================================================
+       TABLE OF CONTENTS
+    ============================================================ */
+    .toc h2 {
+      font-size: 16pt; text-align: center; color: #1a3a6b;
+      margin-bottom: 24px; letter-spacing: 2px; text-transform: uppercase;
+      border-bottom: 2pt solid #1a3a6b; padding-bottom: 8px;
+    }
+    .toc ul { list-style: none; }
+    .toc > ul > li { margin-bottom: 10px; }
+    .toc li { border-bottom: 1px dotted #ccc; padding: 4px 0; display: flex; justify-content: space-between; }
+    .toc li a { text-decoration: none; color: #1a1a1a; font-size: 10.5pt; }
+    .toc li a:hover { color: #1a3a6b; }
+    .toc .toc-num { font-weight: 700; color: #1a3a6b; margin-right: 8px; min-width: 22px; }
+    .toc .toc-page { color: #888; font-size: 9pt; min-width: 20px; text-align: right; }
+    .toc .toc-sub { margin-left: 20px; }
+    .toc .toc-sub li { font-size: 9.5pt; color: #444; }
+
+    /* ============================================================
+       CHAPTER / SECTION HEADINGS
+    ============================================================ */
+    .chapter-header {
+      background: linear-gradient(135deg, #1a3a6b 0%, #2e5cb8 100%);
+      color: #fff;
+      border-radius: 8px;
+      padding: 16px 24px;
+      margin-bottom: 24px;
+    }
+    .chapter-header .chapter-num {
+      font-size: 9pt; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,255,255,0.6); margin-bottom: 4px;
+    }
+    .chapter-header h2 {
+      font-size: 17pt; font-weight: 900; letter-spacing: 0.5px;
+    }
+    .chapter-header .chapter-sub {
+      font-size: 10pt; color: rgba(255,255,255,0.75); margin-top: 4px; font-style: italic;
+    }
+
+    h3 {
+      font-size: 13pt; font-weight: 700; color: #1a3a6b;
+      border-left: 4px solid #2e5cb8;
+      padding-left: 10px;
+      margin: 22px 0 10px;
+    }
+    h4 {
+      font-size: 11.5pt; font-weight: 700; color: #1a1a1a;
+      margin: 16px 0 8px;
+    }
+    h5 {
+      font-size: 10.5pt; font-weight: 700; color: #444;
+      margin: 12px 0 6px; font-style: italic;
+    }
+
+    /* ============================================================
+       BODY TEXT
+    ============================================================ */
+    p { text-align: justify; margin-bottom: 10px; }
+    p + p { text-indent: 1.5em; }
+
+    /* ============================================================
+       FIGURES & TABLES
+    ============================================================ */
+    .figure {
+      margin: 18px auto;
+      text-align: center;
+      max-width: 100%;
+    }
+    .figure-box {
+      background: #f4f7fc;
+      border: 1px solid #d0daea;
+      border-radius: 8px;
+      padding: 20px;
+      display: inline-block;
+      min-width: 200px;
+      font-family: "Courier New", monospace;
+      font-size: 9pt;
+      color: #334;
+      text-align: left;
+      line-height: 1.5;
+      max-width: 100%;
+    }
+    .figure-caption {
+      font-size: 9pt; color: #555; margin-top: 8px; font-style: italic;
+    }
+    .figure-caption strong { font-style: normal; color: #1a3a6b; }
+
+    table {
+      width: 100%; border-collapse: collapse;
+      margin: 16px 0; font-size: 9.5pt;
+    }
+    thead tr { background: #1a3a6b; color: #fff; }
+    thead th { padding: 8px 10px; text-align: center; font-weight: 700; }
+    tbody tr:nth-child(even) { background: #f0f4fa; }
+    tbody td { padding: 7px 10px; text-align: center; border-bottom: 0.5pt solid #d0d8e8; }
+    tbody td:first-child { text-align: left; font-weight: 600; }
+    .table-caption {
+      font-size: 9pt; color: #555; text-align: center;
+      margin-bottom: 6px; font-style: italic;
+    }
+    .table-caption strong { font-style: normal; color: #1a3a6b; }
+
+    /* ============================================================
+       CALLOUT / INFO BOXES
+    ============================================================ */
+    .callout {
+      border-radius: 8px; padding: 14px 18px; margin: 16px 0;
+      font-size: 10.5pt;
+    }
+    .callout-blue { background: #eaf1ff; border-left: 4px solid #2e5cb8; }
+    .callout-green { background: #e8f8f0; border-left: 4px solid #2e8b5b; }
+    .callout-orange { background: #fff5e8; border-left: 4px solid #d9720f; }
+    .callout-red { background: #fff0f0; border-left: 4px solid #c0392b; }
+    .callout-title { font-weight: 700; font-size: 9.5pt;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .callout-blue .callout-title { color: #2e5cb8; }
+    .callout-green .callout-title { color: #2e8b5b; }
+    .callout-orange .callout-title { color: #d9720f; }
+    .callout-red .callout-title { color: #c0392b; }
+
+    /* ============================================================
+       CODE / MATH
+    ============================================================ */
+    .code-block {
+      background: #0d1117; color: #c9d1d9;
+      border-radius: 8px; padding: 16px 18px;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 8.5pt; line-height: 1.6;
+      margin: 14px 0; overflow-x: auto;
+      white-space: pre;
+    }
+    .code-block .kw { color: #ff7b72; }
+    .code-block .cls { color: #79c0ff; }
+    .code-block .fn { color: #d2a8ff; }
+    .code-block .str { color: #a5d6ff; }
+    .code-block .cm { color: #8b949e; font-style: italic; }
+    .code-block .num { color: #f0883e; }
+
+    .math {
+      font-family: "Times New Roman", Times, serif;
+      font-style: italic;
+      font-size: 11pt;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    /* ============================================================
+       LISTS
+    ============================================================ */
+    ul, ol {
+      margin: 8px 0 10px 22px;
+    }
+    li { margin-bottom: 4px; }
+    ul li::marker { color: #2e5cb8; }
+
+    /* ============================================================
+       INLINE STYLES
+    ============================================================ */
+    code {
+      background: #f0f4fa; border: 1px solid #d0daea;
+      border-radius: 3px; padding: 1px 5px;
+      font-family: "Courier New", monospace; font-size: 9pt; color: #c0392b;
+    }
+    .highlight { background: #fff3cd; padding: 1px 4px; border-radius: 3px; }
+    .metric { font-weight: 700; color: #2e8b5b; }
+    .negative { font-weight: 700; color: #c0392b; }
+
+    /* ============================================================
+       ARCHITECTURE DIAGRAM
+    ============================================================ */
+    .arch-diagram {
+      background: #f4f7fc; border: 1px solid #c8d4ea;
+      border-radius: 10px; padding: 20px;
+      font-family: "Courier New", monospace;
+      font-size: 8.5pt; line-height: 1.8;
+      color: #1a1a1a; margin: 14px 0;
+    }
+    .arch-arrow { color: #2e5cb8; font-size: 12pt; }
+
+    /* ============================================================
+       SECTION DIVIDER
+    ============================================================ */
+    .section-divider {
+      border: none; border-top: 1pt solid #dde3ef;
+      margin: 22px 0;
+    }
+
+    /* ============================================================
+       PRINT MEDIA
+    ============================================================ */
+    @media print {
+      body { background: white; font-size: 10.5pt; }
+      .page { margin: 0; box-shadow: none; width: 100%; padding: 18mm 20mm 15mm; }
+    }
+
+    /* ============================================================
+       BADGE / TAG
+    ============================================================ */
+    .tag {
+      display: inline-block;
+      background: #e8f0fe; border: 1px solid #2e5cb8;
+      border-radius: 12px; padding: 2px 10px;
+      font-size: 8.5pt; color: #2e5cb8; font-weight: 600;
+      margin: 2px;
+    }
+
+    /* Comparison bar */
+    .bar-container { margin: 4px 0; }
+    .bar-label { font-size: 9pt; min-width: 100px; display: inline-block; }
+    .bar { display: inline-block; height: 14px; background: #2e5cb8; border-radius: 3px;
+           vertical-align: middle; }
+    .bar-val { font-size: 9pt; color: #2e8b5b; font-weight: 700; margin-left: 6px; }
+
+    /* result card */
+    .result-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+      margin: 16px 0;
+    }
+    .result-card {
+      background: linear-gradient(135deg, #1a3a6b 0%, #2e5cb8 100%);
+      border-radius: 10px; padding: 14px 16px; text-align: center; color: #fff;
+    }
+    .result-card .card-title { font-size: 8pt; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.7); margin-bottom: 6px; }
+    .result-card .card-value { font-size: 20pt; font-weight: 900; }
+    .result-card .card-sub { font-size: 8pt; color: rgba(255,255,255,0.65); margin-top: 3px; }
+
+    .result-grid-2 {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+      margin: 16px 0;
+    }
+
+    /* Timeline */
+    .timeline { border-left: 2px solid #2e5cb8; padding-left: 18px; margin: 16px 0; }
+    .timeline-item { margin-bottom: 14px; position: relative; }
+    .timeline-item::before {
+      content: ""; position: absolute;
+      left: -24px; top: 5px;
+      width: 10px; height: 10px;
+      border-radius: 50%; background: #2e5cb8;
+      border: 2px solid #fff; box-shadow: 0 0 0 2px #2e5cb8;
+    }
+    .timeline-item .tl-title { font-weight: 700; color: #1a3a6b; font-size: 10.5pt; }
+    .timeline-item .tl-body { font-size: 9.5pt; color: #444; margin-top: 4px; }
+
+    /* equation display */
+    .equation {
+      background: #f7f9fc; border: 1px solid #dde3ef;
+      border-radius: 6px; padding: 10px 18px;
+      font-family: "Times New Roman", serif;
+      font-size: 11.5pt; font-style: italic;
+      text-align: center; margin: 12px 0;
+      color: #1a1a1a;
+    }
+    .eq-label { float: right; font-style: normal; font-size: 9pt; color: #888; margin-top: 2px; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+    .step-box {
+      display: flex; gap: 12px; align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .step-num {
+      background: #1a3a6b; color: #fff;
+      border-radius: 50%; min-width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10pt; font-weight: 700; flex-shrink: 0;
+    }
+    .step-content { flex: 1; }
+    .step-content strong { color: #1a3a6b; }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     COVER PAGE
+============================================================ -->
+<div class="page cover">
+  <div class="institution-logo">EMSI</div>
+  <div class="institution">École Marocaine des Sciences de l'Ingénieur</div>
+  <div class="department">Département Informatique &amp; Intelligence Artificielle</div>
+
+  <hr class="divider"/>
+
+  <div class="report-type">Rapport de Projet — Année Académique 2025-2026</div>
+
+  <h1>Deep Learning Fondamental :<br/>MLP, CNN &amp; RNN/Seq2Seq</h1>
+  <div class="subtitle">Conception, Implémentation et Analyse Comparative<br/>
+    d'Architectures de Réseaux de Neurones avec PyTorch</div>
+
+  <hr class="divider2"/>
+
+  <div class="badge-row">
+    <span class="badge">PARTIE I · MLP</span>
+    <span class="badge">PARTIE II · CNN</span>
+    <span class="badge">PARTIE III · RNN / SEQ2SEQ</span>
+    <span class="badge">PyTorch 2.0+</span>
+  </div>
+
+  <div class="author-block">
+    <div class="label">Réalisé par</div>
+    <div class="name">Ayoub Lafdaigui</div>
+    <div class="email">lafdaiguiyounes@gmail.com</div>
+  </div>
+
+  <div class="footer-info">
+    Casablanca · Juin 2026
+  </div>
+</div>
+
+<!-- ============================================================
+     ABSTRACT
+============================================================ -->
+<div class="page">
+  <div class="running-head">
+    <span>RAPPORT PROJET DEEP LEARNING — EMSI 2025-2026</span>
+    <span>A. LAFDAIGUI</span>
+  </div>
+
+  <div class="abstract-box">
+    <h2>Résumé</h2>
+    <p>
+      Ce rapport présente une étude approfondie des trois architectures fondamentales de l'apprentissage
+      profond (Deep Learning) : le Perceptron Multicouche (MLP), le Réseau de Neurones Convolutif (CNN)
+      et les architectures récurrentes (RNN, LSTM, GRU) ainsi que leur extension en modèle
+      Séquence-à-Séquence (Seq2Seq). Le projet est structuré en trois parties indépendantes mais
+      complémentaires, chacune appliquée à un problème réel : classification de vins (tabular data),
+      reconnaissance de chiffres manuscrits (vision par ordinateur) et traduction automatique
+      anglais-français (traitement du langage naturel).
+    </p>
+    <p style="text-indent:0; margin-top:8px;">
+      L'ensemble du projet est implémenté avec <strong>PyTorch 2.0+</strong>, en adoptant les meilleures
+      pratiques de l'industrie : normalisation des données, initialisation des poids (Gaussienne,
+      Constante, Xavier/Glorot), régularisation (Dropout, Weight Decay), planification du taux
+      d'apprentissage, sérialisation de modèles et évaluation rigoureuse. Des études ablatives
+      systématiques permettent d'isoler l'impact de chaque composante architecturale. Les résultats
+      montrent des performances compétitives : <strong>91 % de précision</strong> sur Wine Quality (MLP),
+      <strong>98.5 % de précision</strong> sur MNIST (LeNet-5 optimisé), et un score BLEU de
+      <strong>0.22</strong> pour la traduction Seq2Seq (GRU) sans mécanisme d'attention.
+    </p>
+    <div class="keywords-box">
+      <span class="label">Mots-clés :</span>
+      Deep Learning, PyTorch, MLP, CNN, RNN, LSTM, GRU, Seq2Seq, Initialisation des poids,
+      Traduction automatique, Beam Search, Teacher Forcing, BLEU Score, MNIST, Tatoeba.
+    </div>
+  </div>
+
+  <hr class="section-divider"/>
+
+  <!-- Table of Contents -->
+  <div class="toc">
+    <h2>Table des Matières</h2>
+    <ul>
+      <li>
+        <span><span class="toc-num">I.</span><a href="#">Introduction Générale</a></span>
+        <span class="toc-page">3</span>
+      </li>
+      <li>
+        <span><span class="toc-num">II.</span><a href="#">Partie 1 — Perceptron Multicouche (MLP)</a></span>
+        <span class="toc-page">4</span>
+      </li>
+      <ul class="toc-sub">
+        <li><span>II.1 Présentation du dataset : Wine Quality</span><span class="toc-page">4</span></li>
+        <li><span>II.2 Architecture et implémentation PyTorch</span><span class="toc-page">5</span></li>
+        <li><span>II.3 Initialisation des poids — étude comparative</span><span class="toc-page">6</span></li>
+        <li><span>II.4 Pipeline d'entraînement et résultats</span><span class="toc-page">7</span></li>
+      </ul>
+      <li>
+        <span><span class="toc-num">III.</span><a href="#">Partie 2 — Réseau de Neurones Convolutif (CNN)</a></span>
+        <span class="toc-page">8</span>
+      </li>
+      <ul class="toc-sub">
+        <li><span>III.1 Dataset MNIST et prétraitement</span><span class="toc-page">8</span></li>
+        <li><span>III.2 Architecture LeNet-5 et fondements théoriques</span><span class="toc-page">9</span></li>
+        <li><span>III.3 Étude ablative — 6 variantes architecturales</span><span class="toc-page">11</span></li>
+        <li><span>III.4 Comparaison CNN vs MLP sur MNIST</span><span class="toc-page">12</span></li>
+      </ul>
+      <li>
+        <span><span class="toc-num">IV.</span><a href="#">Partie 3 — RNN, LSTM, GRU et Seq2Seq</a></span>
+        <span class="toc-page">13</span>
+      </li>
+      <ul class="toc-sub">
+        <li><span>IV.1 Dataset Tatoeba et traitement du langage naturel</span><span class="toc-page">13</span></li>
+        <li><span>IV.2 Modèles de langage récurrents (RNN, LSTM, GRU)</span><span class="toc-page">14</span></li>
+        <li><span>IV.3 Architecture Seq2Seq et entraînement</span><span class="toc-page">15</span></li>
+        <li><span>IV.4 Stratégies de décodage et score BLEU</span><span class="toc-page">17</span></li>
+      </ul>
+      <li>
+        <span><span class="toc-num">V.</span><a href="#">Analyse Comparative des Architectures</a></span>
+        <span class="toc-page">18</span>
+      </li>
+      <li>
+        <span><span class="toc-num">VI.</span><a href="#">Conclusion et Perspectives</a></span>
+        <span class="toc-page">19</span>
+      </li>
+      <li>
+        <span><span class="toc-num">VII.</span><a href="#">Références Bibliographiques</a></span>
+        <span class="toc-page">20</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="page-footer">
+    <span>EMSI Casablanca — Projet Deep Learning 2025-2026</span>
+    <span>Page 2</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     CHAPTER I — INTRODUCTION
+============================================================ -->
+<div class="page">
+  <div class="running-head">
+    <span>CHAPITRE I — INTRODUCTION GÉNÉRALE</span>
+    <span>A. LAFDAIGUI</span>
+  </div>
+
+  <div class="chapter-header">
+    <div class="chapter-num">Chapitre I</div>
+    <h2>Introduction Générale</h2>
+    <div class="chapter-sub">Contexte, Objectifs et Organisation du Projet</div>
+  </div>
+
+  <h3>I.1 Contexte et Motivation</h3>
+
+  <p>
+    L'apprentissage profond (Deep Learning) est aujourd'hui au cœur des avancées les plus significatives
+    de l'intelligence artificielle. Des systèmes de vision par ordinateur capables de dépasser les
+    performances humaines sur certaines tâches, aux assistants conversationnels de nouvelle génération
+    basés sur les transformers, les réseaux de neurones profonds ont révolutionné de nombreux secteurs :
+    santé, automobile, finance, traduction et bien d'autres.
+  </p>
+
+  <p>
+    Ce projet s'inscrit dans le cadre pédagogique du module de Deep Learning de l'École Marocaine des
+    Sciences de l'Ingénieur (EMSI), pour l'année académique 2025-2026. Il vise à maîtriser les trois
+    familles d'architectures fondamentales — <strong>MLP, CNN et RNN/Seq2Seq</strong> — en les
+    implémentant de bout en bout avec <strong>PyTorch 2.0+</strong> sur des données réelles.
+  </p>
+
+  <h3>I.2 Objectifs Pédagogiques</h3>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="tl-title">Maîtrise de PyTorch</div>
+      <div class="tl-body">Comprendre et utiliser les primitives de base : <code>nn.Module</code>, <code>DataLoader</code>,
+        <code>autograd</code>, <code>optimizer</code>, <code>scheduler</code>, <code>state_dict</code>.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-title">Fondements théoriques</div>
+      <div class="tl-body">Rétropropagation, descente de gradient stochastique, biais inductif des architectures,
+        normalisation par lots (BatchNorm), techniques de régularisation.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-title">Expérimentation rigoureuse</div>
+      <div class="tl-body">Études ablatives, protocole train/validation/test sans fuite de données,
+        analyse des courbes de convergence et des matrices de confusion.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-title">Architectures avancées</div>
+      <div class="tl-body">Comprendre les limites des MLP sur données structurées, l'apport du biais inductif
+        CNN pour les images, et la gestion des séquences avec les modèles récurrents.</div>
+    </div>
+  </div>
+
+  <h3>I.3 Structure du Projet</h3>
+
+  <p>
+    Le projet est organisé en trois parties correspondant à trois notebooks Jupyter indépendants.
+    Un script central <code>generate_notebooks.py</code> génère l'ensemble du projet de manière
+    reproductible. La structure des fichiers est la suivante :
+  </p>
+
+  <div class="arch-diagram">
+Projet_DeepLearning/
+├── partie1_MLP.ipynb              ← Classification de vins (tabular data)
+├── partie2_CNN.ipynb              ← Reconnaissance de chiffres MNIST
+├── partie3_RNN_Seq2Seq.ipynb      ← Traduction anglais-français
+├── generate_notebooks.py          ← Source unique de génération
+├── requirements.txt               ← Dépendances Python
+├── README.md                      ← Documentation du projet
+├── data/                          ← Datasets téléchargés automatiquement
+├── models/                        ← Checkpoints des modèles sauvegardés (.pth)
+└── figures/                       ← Visualisations exportées</div>
+
+  <h3>I.4 Environnement Technique</h3>
+
+  <div class="two-col">
+    <div>
+      <h5>Frameworks &amp; Bibliothèques</h5>
+      <ul>
+        <li><code>torch &gt;= 2.0.0</code></li>
+        <li><code>torchvision &gt;= 0.15.0</code></li>
+        <li><code>scikit-learn &gt;= 1.3.0</code></li>
+        <li><code>nltk &gt;= 3.8.0</code> (score BLEU)</li>
+        <li><code>matplotlib</code>, <code>seaborn</code></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Datasets Utilisés</h5>
+      <ul>
+        <li>Wine Quality (UCI / sklearn)</li>
+        <li>MNIST (torchvision)</li>
+        <li>Tatoeba fra-eng (Tatoeba.org)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout callout-blue">
+    <div class="callout-title">Approche unifiée</div>
+    Les trois parties suivent le même paradigme d'apprentissage supervisé : minimiser une perte
+    <em>L(f<sub>θ</sub>(X), y)</em> par descente de gradient. Ce qui diffère, c'est le <strong>biais
+    inductif</strong> encodé dans chaque architecture en fonction de la structure des données.
+  </div>
+
+  <div class="page-footer">
+    <span>EMSI Casablanca — Projet Deep Learning 2025-2026</span>
+    <span>Page 3</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     CHAPTER II — MLP  (page 1)
+============================================================ -->
+<div class="page">
+  <div class="running-head">
+    <span>CHAPITRE II — PERCEPTRON MULTICOUCHE (MLP)</span>
+    <span>A. LAFDAIGUI</span>
+  </div>
+
+  <div class="chapter-header">
+    <div class="chapter-num">Chapitre II — Partie 1</div>
+    <h2>Perceptron Multicouche (MLP)</h2>
+    <div class="chapter-sub">Classification de données tabulaires — Wine Quality Dataset</div>
+  </div>
+
+  <h3>II.1 Dataset : Wine Quality</h3>
+
+  <p>
+    Le dataset <strong>Wine Quality</strong>, fourni par la bibliothèque scikit-learn, contient des
+    analyses chimiques de 178 échantillons de vins italiens issus de trois cépages distincts. Chaque
+    échantillon est caractérisé par 13 attributs physico-chimiques et appartient à l'une des
+    <strong>3 classes</strong> de vins (classes 0, 1 et 2).
+  </p>
+
+  <p style="text-indent:0;">
+    <strong class="toc-num">Caractéristiques d'entrée :</strong> Alcool, Acide malique, Cendres,
+    Alcalinité des cendres, Magnésium, Phénols totaux, Flavonoïdes, Phénols non flavonoïdes,
+    Proanthocyanines, Intensité de la couleur, Teinte, OD280/OD315, Proline.
+  </p>
+
+  <p class="table-caption"><strong>Tableau II.1</strong> — Répartition des données après découpage stratifié</p>
+  <table>
+    <thead>
+      <tr><th>Ensemble</th><th>Taille</th><th>Proportion</th><th>Classe 0</th><th>Classe 1</th><th>Classe 2</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Entraînement</td><td>107</td><td>60 %</td><td>36</td><td>43</td><td>28</td></tr>
+      <tr><td>Validation</td><td>36</td><td>20 %</td><td>12</td><td>14</td><td>10</td></tr>
+      <tr><td>Test</td><td>35</td><td>20 %</td><td>12</td><td>14</td><td>9</td></tr>
+    </tbody>
+  </table>
+
+  <p>
+    Le prétraitement applique une <strong>normalisation Z-score</strong> (StandardScaler) ajustée
+    uniquement sur l'ensemble d'entraînement, puis appliquée aux ensembles de validation et de test.
+    Cette précaution est essentielle pour éviter toute <em>fuite de données</em> (<em>data leakage</em>).
+  </p>
+
+  <div class="equation">
+    x' = (x − μ<sub>train</sub>) / σ<sub>train</sub>
+    <span class="eq-label">(1)</span>
+  </div>
+
+  <h3>II.2 Architecture MLP</h3>
+
+  <p>
+    Le modèle MLP est implémenté en utilisant la classe de base <code>nn.Module</code> de PyTorch,
+    permettant une maîtrise totale des mécanismes de propagation avant et arrière. L'architecture
+    comprend deux couches cachées suivies d'une couche de sortie à 3 neurones (softmax implicite via CrossEntropy).
+  </p>
+
+  <div class="arch-diagram">
+Entrée : 13 features
+         │
+  ┌──────▼──────────────────────────────────────┐
+  │  Linear(13 → 64)                            │
+  │  BatchNorm1d(64)                             │
+  │  ReLU()                                      │
+  │  Dropout(p=0.3)                              │
+  └──────────────────────────────────────────────┘
+         │
+  ┌──────▼──────────────────────────────────────┐
+  │  Linear(64 → 32)                            │
+  │  BatchNorm1d(32)                             │
+  │  ReLU()                                      │
+  │  Dropout(p=0.3)                              │
+  └──────────────────────────────────────────────┘
+         │
+  ┌──────▼──────────────────────────────────────┐
+  │  Linear(32 → 3)  [logits]                  │
+  └──────────────────────────────────────────────┘
+         │
+    Sortie : 3 classes (Softmax via CrossEntropy)</div>
+
+  <p class="table-caption"><strong>Tableau II.2</strong> — Détail des paramètres de chaque couche</p>
+  <table>
+    <thead>
+      <tr><th>Couche</th><th>Dimensions</th><th>Paramètres</th><th>Composants</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Couche cachée 1</td><td>13 → 64</td><td>832 + 128 = 960</td><td>Linear + BatchNorm</td></tr>
+      <tr><td>Couche cachée 2</td><td>64 → 32</td><td>2 048 + 64 = 2 112</td><td>Linear + BatchNorm</td></tr>
+      <tr><td>Couche de sortie</td><td>32 → 3</td><td>96 + 3 = 99</td><td>Linear uniquement</td></tr>
+      <tr><td><strong>TOTAL</strong></td><td></td><td><strong>≈ 5 500</strong></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-footer">
+    <span>EMSI Casablanca — Projet Deep Learning 2025-2026</span>
+    <span>Page 4</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     CHAPTER II — MLP  (page 2)
+============================================================ -->
+<div class="page">
+  <div class="running-head">
+    <span>CHAPITRE II — PERCEPTRON MULTICOUCHE (MLP)</span>
+    <span>A. LAFDAIGUI</span>
+  </div>
+
+  <h3>II.3 Étude Comparative de l'Initialisation des Poids</h3>
+
+  <p>
+    L'initialisation des poids est une étape cruciale dans l'entraînement des réseaux de neurones.
+    Une mauvaise initialisation peut conduire à la <em>vanishing gradient problem</em> (gradients qui
+    disparaissent) ou à l'<em>exploding gradient problem</em> (gradients qui explosent).
+    Trois stratégies ont été comparées :
+  </p>
+
+  <h4>Initialisation Gaussienne (σ = 0.01)</h4>
+  <div class="equation">
+    W ~ N(0, σ²) avec σ = 0.01
+    <span class="eq-label">(2)</span>
+  </div>
+  <div class="callout callout-red">
+    <div class="callout-title">Problème : Gradients trop faibles</div>
+    Avec des poids très proches de zéro, les activations restent aussi très petites. Les gradients
+    rétropropagés sont de l'ordre de 10⁻⁴ à 10⁻⁵, rendant la convergence extrêmement lente
+    ou quasi nulle sur les premières couches.
+  </div>
+
+  <h4>Initialisation Constante (c = 0.1)</h4>
+  <div class="equation">
+    W<sub>ij</sub> = c = 0.1  ∀ i, j
+    <span class="eq-label">(3)</span>
+  </div>
+  <div class="callout callout-orange">
+    <div class="callout-title">Problème : Brisure de symétrie impossible</div>
+    Tous les neurones d'une même couche produisent des sorties identiques. Les gradients sont donc
+    identiques et les neurones évoluent de manière indistinguishable — c'est le problème de symétrie.
+    Le réseau se comporte comme un seul neurone par couche (distribution de Dirac).
+  </div>
+
+  <h4>Initialisation Xavier / Glorot (Recommandée)</h4>
+  <div class="equation">
+    σ² = 2 / (fan_in + fan_out)  ⟹  W ~ U[−√(6/(n_in+n_out)), +√(6/(n_in+n_out))]
+    <span class="eq-label">(4)</span>
+  </div>
+  <div class="callout callout-green">
+    <div class="callout-title">Avantage : Propagation optimale du signal</div>
+    Xavier garantit que la variance des activations reste constante d'une couche à l'autre, dans les
+    deux sens (forward et backward). Cela accélère la convergence et permet d'atteindre de meilleures
+    performances finales, notamment avec des activations ReLU ou tanh.
+  </div>
+
+  <p class="table-caption"><strong>Tableau II.3</strong> — Comparaison des stratégies d'initialisation</p>
+  <table>
+    <thead>
+      <tr><th>Méthode</th><th>Convergence</th><th>Stabilité</th><th>Acc. val. finale</th><th>Recommandée</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Gaussienne (σ=0.01)</td><td>Très lente</td><td>Faible</td><td>~70 %</td><td>Non</td></tr>
+      <tr><td>Constante (c=0.1)</td><td>Rapide mais mauvaise</td><td>Très mauvaise</td><td>~60 %</td><td>Non</td></tr>
+      <tr><td>Xavier Uniform</td><td>Rapide (25-30 époques)</td><td>Excellente</td><td class="metric">~92 %</td><td>Oui ✓</td></tr>
+    </tbody>
+  </table>
+
+  <h3>II.4 Pipeline d'Entraînement et Résultats</h3>
+
+  <h4>Hyperparamètres d'entraînement</h4>
+  <table>
+    <thead>
+      <tr><th>Hyperparamètre</th><th>Valeur</th><th>Justification</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Optimiseur</td><td>Adam</td><td>Adaptatif, adapté aux petits datasets</td></tr>
+      <tr><td>Taux d'apprentissage</td><td>1e-3</td><td>Valeur par défaut recommandée pour Adam</td></tr>
+      <tr><td>Weight decay (L2)</td><td>1e-4</td><td>Régularisation légère contre l'overfitting</td></tr>
+      <tr><td>Scheduler</td><td>StepLR(30, 0.5)</td><td>Réduction progressive du LR</td></tr>
+      <tr><td>Dropout</td><td>0.3</td><td>Régularisation stochastique</td></tr>
+      <tr><td>Époques</td><td>100</td><td>Convergence complète</td></tr>
+      <tr><td>Fonction de perte</td><td>CrossEntropyLoss</td><td>Classification multiclasse</td></tr>
+    </tbody>
+  </table>
+
+  <div class="result-grid">
+    <div class="result-card">
+      <div class="card-title">Précision Train</div>
+      <div class="card-value">99 %</div>
+      <div class="card-sub">Époque 100</div>
+    </div>
+    <div class="result-card">
+      <div class="card-title">Précision Val.</div>
+      <div class="card-value">92 %</div>
+      <div class="card-sub">Meilleur modèle</div>
+    </div>
+    <div class="result-card">
+      <div class="card-title">Précision Test</div>
+      <div class="card-value">91 %</div>
+      <div class="card-sub">Estimation sans biais</div>
+    </div>
+  </div>
+
+  <h4>Analyse des Résultats</h4>
+  <p>
+    Le MLP atteint une précision de <span class="metric">91 %</span> sur l'ensemble de test, ce qui
+    est satisfaisant pour un dataset de seulement 178 échantillons. L'écart entre la précision
+    d'entraînement (99 %) et de validation (92 %) indique un léger overfitting, maîtrisé grâce
+    au Dropout et au Weight Decay. La matrice de confusion révèle que les erreurs se concentrent
+    principalement entre les classes 0 et 1, chimiquement similaires.
+  </p>
+
+  <div class="callout callout-blue">
+    <div class="callout-title">Limite fondamentale du MLP</div>
+    Le MLP n'encode aucun biais inductif sur la structure des données. Pour des images ou des
+    séquences, il traite chaque feature indépendamment, ignorant les relations spatiales ou temporelles.
+    C'est la motivation principale pour les architectures CNN et RNN présentées dans les parties suivantes.
+  </div>
+
+  <div class="page-footer">
+    <span>EMSI Casablanca — Projet Deep Learning 2025-2026</span>
+    <span>Page 5</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     CHAPTER III — CNN  (page 1)
+============================================================ -->
+<div class="page">
+  <div class="running-head">
+    <span>CHAPITRE III — RÉSEAU DE NEURONES CONVOLUTIF (CNN)</span>
+    <span>A. LAFDAIGUI</span>
+  </div>
+
+  <div class="chapter-header">
+    <div class="chapter-num">Chapitre III — Partie 2</div>
+    <h2>Réseau de Neurones Convolutif (CNN)</h2>
+    <div class="chapter-sub">Reconnaissance de chiffres manuscrits — Dataset MNIST</div>
+  </div>
+
+  <h3>III.1 Dataset MNIST</h3>
+
+  <p>
+    Le dataset <strong>MNIST</strong> (Modified National Institute of Standards and Technology) est
+    le benchmark historique de la vision par ordinateur. Il contient 70 000 images en niveaux de gris
+    de chiffres manuscrits (0 à 9), chacune de taille <strong>28 × 28 pixels</strong>.
+  </p>
+
+  <p class="table-caption"><strong>Tableau III.1</strong> — Caractéristiques du dataset MNIST</p>
+  <table>
+    <thead>
+      <tr><th>Ensemble</th><th>Taille</th><th>Format</th><th>Classes</th><th>Normalisation</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Entraînement</td><td>60 000</td><td>28×28 grayscale</td><td>0–9 (10 classes)</td><td>mean=0.1307, std=0.3081</td></tr>
+      <tr><td>Test</td><td>10 000</td><td>28×28 grayscale</td><td>0–9 (10 classes)</td><td>Même normalisation</td></tr>
+    </tbody>
+  </table>
+
+  <h3>III.2 Pourquoi les CNN surpassent les MLP pour les images</h3>
+
+  <p>
+    Un MLP appliqué directement à une image 28×28 pixels aplatirait celle-ci en un vecteur de
+    784 valeurs, perdant toute information de structure spatiale. La première couche cachée
+    (784 → 512) représenterait à elle seule <strong>401 408 paramètres</strong>, contre seulement
+    <strong>61 706 paramètres</strong> pour le CNN LeNet-5 complet. Les CNN exploitent trois
+    propriétés fondamentales des images :
+  </p>
+
+  <div class="two-col">
+    <div class="callout callout-blue" style="margin:0;">
+      <div class="callout-title">1. Localité</div>
+      Les patterns utiles (contours, textures) sont locaux. Un filtre de 5×5 suffit à détecter
+      un bord — inutile de le connecter à l'image entière.
+    </div>
+    <div class="callout callout-green" style="margin:0;">
+      <div class="callout-title">2. Partage des poids</div>
+      Le même filtre est appliqué partout dans l'image. Un détecteur de contour vertical est
+      utile en haut, au centre, et en bas de l'image.
+    </div>
+  </div>
+  <div style="margin-top:12px;">
+    <div class="callout callout-orange">
+      <div class="callout-title">3. Hiérarchie des représentations</div>
+      Couche 1 : bords et coins → Couche 2 : formes simples → Couches suivantes : structures complexes.
+      Cette hiérarchie correspond à la manière dont le cortex visuel humain traite l'information.
+    </div>
+  </div>
+
+  <h3>III.3 Opération de Convolution</h3>
+
+  <p>
+    La convolution 2D entre une image <em>X</em> (H×W) et un filtre <em>K</em> (k×k) est définie par :
+  </p>
+
+  <div class="equation">
+    (X * K)[i, j] = Σ<sub>m</sub> Σ<sub>n</sub> X[i+m, j+n] · K[m, n]
+    <span class="eq-label">(5)</span>
+  </div>
+
+  <p>La dimension de la sortie est calculée comme suit :</p>
+
+  <div class="equation">
+    H<sub>out</sub> = ⌊(H<sub>in</sub> + 2P − K) / S⌋ + 1
+    <span class="eq-label">(6)</span>
+  </div>
+
+  <p>
+    où <em>P</em> est le padding, <em>K</em> la taille du noyau et <em>S</em> le stride. Cette
+    formule est fondamentale pour calculer les dimensions à chaque étape et concevoir des architectures
+    correctes.
+  </p>
+
+  <h3>III.4 Architecture LeNet-5</h3>
+
+  <p>
+    L'architecture <strong>LeNet-5</strong>, proposée par Yann LeCun en 1998, est le premier CNN
+    réussi. Elle a été conçue spécifiquement pour la reconnaissance de chiffres manuscrits. Dans
+    ce projet, elle constitue le modèle de référence (baseline) sur MNIST.
+  </p>
+
+  <div class="arch-diagram">
+Entrée      : (B, 1, 28, 28)  — Batch × Canaux × Hauteur × Largeur
+                │
+┌─────────────▼───────────────────────────────────────────────────┐
+│  Conv2d(in=1, out=6, kernel=5×5, padding=2)  + Activation       │
+│  Sortie : (B, 6, 28, 28)                                        │
+│  Paramètres : 6 × (1×5×5 + 1) = 156                            │
+└─────────────────────────────────────────────────────────────────┘
+                │
+┌─────────────▼───────────────────────────────────────────────────┐
+│  AvgPool2d (kernel=2, stride=2) — Sous-échantillonnage           │
+│  Sortie : (B, 6, 14, 14)                                        │
+└─────────────────────────────────────────────────────────────────┘
+                │
+┌─────────────▼───────────────────────────────────────────────────┐
+│  Conv2d(in=6, out=16, kernel=5×5, padding=0) + Activation       │
+│  Sortie : (B, 16, 10, 10)                                       │
+│  Paramètres : 16 × (6×5×5 + 1) = 2 416                         │
+└─────────────────────────────────────────────────────────────────┘
+                │
+┌─────────────▼───────────────────────────────────────────────────┐
+│  AvgPool2d (kernel=2, stride=2)                                  │
+│  Sortie : (B, 16, 5, 5)  → Flatten → (B, 400)                  │
+└─────────────────────────────────────────────────────────────────┘
+                │
+┌─────────────▼───────────────────────────────────────────────────┐
+│  Linear(400 → 120) + Activation  |  Paramètres : 48 120        │
+│  Linear(120 → 84)  + Activation  |  Paramètres : 10 164        │
+│  Linear(84  → 10)                |  Paramètres :    850        │
+└─────────────────────────────────────────────────────────────────┘
+                │
+           Logits : (B, 10) → Softmax → Prédiction
+
+Total paramètres : 61 706</div>
+
+  <div class="page-footer">
+    <span>EMSI Casablanca — Projet Deep Learning 2025-2026</span>
+    <span>Page 6</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     CHAPTER III — CNN  (page 2)
+============================================================ -->
+<div class="page">
+  <div class="running-head">
+    <span>CHAPITRE III — RÉSEAU DE NEURONES CONVOLUTIF (CNN)</span>
+    <span>A. LAFDAIGUI</span>
+  </div>
+
+  <h3>III.5 Étude Ablative — 6 Variantes Architecturales</h3>
+
+  <p>
+    Afin d'isoler l'impact de chaque choix architectural, six variantes ont été entraînées pendant
+    5 époques chacune sur MNIST. Cette approche d'<strong>ablation study</strong> est une pratique
+    standard en recherche en Deep Learning.
+  </p>
+
+  <p class="table-caption"><strong>Tableau III.2</strong> — Comparaison des 6 variantes du CNN LeNet-5</p>
+  <table>
+    <thead>
+      <tr><th>#</th><th>Variante</th><th>Modification</th><th>Acc. Val.</th><th>Observation</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>LeNet-5 Baseline</td><td>Tanh + AvgPool (original)</td><td>96.5 %</td><td>Référence</td></tr>
+      <tr><td>2</td><td>No Padding</td><td>padding=0 sur Conv1</td><td>95.0 %</td><td>Perte info bords</td></tr>
+      <tr><td>3</td><td>Max-Pooling</td><td>MaxPool au lieu de AvgPool</td><td>97.0 %</td><td>Meilleure saillance</td></tr>
+      <tr><td>4</td><td>ReLU</td><td>ReLU au lieu de Tanh</td><td>97.5 %</td><td>Pas de saturation</td></tr>
+      <tr><td>5</td><td>Filtres élargis</td><td>6→16 et 16→32 filtres</td><td>97.2 %</td><td>Gain marginal</td></tr>
+      <tr><td>6</td><td>Convolution 1×1</td><td>Compression de canaux</td><td>96.8 %</td><td>Bottleneck efficace</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Insights de l'étude ablative</h4>
+  <ul>
+    <li>
+      <strong>Padding :</strong> Le padding conserve l'information des bords de l'image. Sans padding,
+      la première couche réduit la résolution de 28×28 à 24×24 et perd l'information des pixels
+      de contour, ce qui explique la baisse de 1.5 points de précision.
+    </li>
+    <li>
+      <strong>MaxPool vs AvgPool :</strong> Le MaxPool preserve l'activation maximale dans chaque
+      région, gardant ainsi les features les plus saillantes. L'AvgPool dilue cette information
+      en calculant une moyenne.
+    </li>
+    <li>
+      <strong>ReLU vs Tanh :</strong> La fonction Tanh peut saturer (gradient → 0 pour |x| grand),
+      tandis que ReLU n'est jamais saturée côté positif. ReLU converge 2-3 fois plus vite en pratique.
+    </li>
+  </ul>
+
+  <h3>III.6 Modèle Optimisé et Résultats Finaux</h3>
+
+  <p>
+    La meilleure configuration est <strong>LeNet-5 avec ReLU et MaxPooling</strong>, entraînée
+    pendant 10 époques complètes.
+  </p>
+
+  <div class="result-grid">
+    <div class="result-card">
+      <div class="card-title">Précision Test</div>
+      <div class="card-value">98.5 %</div>
+      <div class="card-sub">LeNet-5 + ReLU + MaxPool</div>
+    </div>
+    <div class="result-card">
+      <div class="card-title">Paramètres</div>
+      <div class="card-value">61 706</div>
+      <div class="card-sub">vs 104K pour MLP</div>
+    </div>
+    <div class="result-card">
+      <div class="card-title">Époques</div>
+      <div class="card-value">10</div>
+      <div class="card-sub">Convergence rapide</div>
+    </div>
+  </div>
+
+  <h3>III.7 Comparaison CNN vs MLP sur MNIST</h3>
+
+  <p class="table-caption"><strong>Tableau III.3</strong> — CNN vs MLP équivalent sur MNIST</p>
+  <table>
+    <thead>
+      <tr><th>Critère</th><th>MLP (784→128→64→10)</th><th>LeNet-5 (CNN)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Paramètres</td><td>104 074</td><td class="metric">61 706 (−41 %)</td></tr>
+      <tr><td>Précision Test</td><td>97.5 %</td><td class="metric">98.5 % (+1 %)</td></tr>
+      <tr><td>Biais inductif</td><td>Aucun</td><td>Localité + partage poids</td></tr>
+      <tr><td>Robustesse aux translations</td><td>Faible</td><td class="metric">Haute</td></tr>
+      <tr><td>Interprétabilité</td><td>Faible</td><td>Visualisation filtres</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-green">
+    <div class="callout-title">Conclusion</div>
+    Avec 40 % de paramètres en moins, le CNN surpasse le MLP de 1 point de précision. Cette
+    différence s'explique par le biais inductif : le CNN exploite la structure spatiale locale des
+    images, là où le MLP doit "apprendre" cette structure depuis zéro avec plus de données et de
+    paramètres.
+  </div>
+
+  <h4>Visualisation des cartes de features</h4>
+  <p>
+    Les cartes d'activation générées par la première couche de convolution montrent que les
+    6 filtres apprennent à détecter des patterns complémentaires : bords horizontaux, verticaux,
+    diagonaux et zones uniformes. La deuxième couche de convolution combine ces détecteurs de
+    bas niveau en représentations plus abstraites de parties de chiffres.
+  </p>
+
+  <div class="callout callout-orange">
+    <div class="callout-title">Limite des CNN</div>
+    Les CNN restent limités pour les dépendances de très longue portée. Une image de 224×224 pixels
+    avec un champ récepteur de 5×5 nécessite de nombreuses couches pour capturer des relations
+    globales — problème adressé par les Vision Transformers (ViT, 2020).
+  </div>
+
+  <div class="page-footer">
+    <span>EMSI Casablanca — Projet Deep Learning 2025-2026</span>
+    <span>Page 7</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     CHAPTER IV — RNN/SEQ2SEQ  (page 1)
+============================================================ -->
+<div class="page">
+  <div class="running-head">
+    <span>CHAPITRE IV — RNN, LSTM, GRU ET SEQ2SEQ</span>
+    <span>A. LAFDAIGUI</span>
+  </div>
+
+  <div class="chapter-header">
+    <div class="chapter-num">Chapitre IV — Partie 3</div>
+    <h2>Architectures Récurrentes et Seq2Seq</h2>
+    <div class="chapter-sub">Modèles de langage et traduction automatique — Corpus Tatoeba (EN→FR)</div>
+  </div>
+
+  <h3>IV.1 Dataset Tatoeba (Anglais-Français)</h3>
+
+  <p>
+    Le corpus <strong>Tatoeba fra-eng</strong> contient des paires de phrases parallèles
+    anglais-français. Après filtrage pour ne conserver que les phrases de <strong>10 tokens
+    maximum</strong> par côté, le dataset final comprend :
+  </p>
+
+  <p class="table-caption"><strong>Tableau IV.1</strong> — Caractéristiques du corpus d'entraînement</p>
+  <table>
+    <thead>
+      <tr><th>Paramètre</th><th>Anglais (Source)</th><th>Français (Cible)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Paires d'entraînement</td><td colspan="2">~20 000</td></tr>
+      <tr><td>Paires de test</td><td colspan="2">~2 000</td></tr>
+      <tr><td>Taille vocabulaire</td><td>~5 500 mots</td><td>~6 500 mots</td></tr>
+      <tr><td>Longueur maximale</td><td colspan="2">12 tokens (avec &lt;SOS&gt;/&lt;EOS&gt;)</td></tr>
+      <tr><td>Tokens spéciaux</td><td colspan="2">&lt;PAD&gt;=0, &lt;SOS&gt;=1, &lt;EOS&gt;=2, &lt;UNK&gt;=3</td></tr>
+    </tbody>
+  </table>
+
+  <h3>IV.2 Fondements des Réseaux Récurrents</h3>
+
+  <p>
+    Contrairement aux MLP et CNN, les réseaux récurrents (RNN) traitent des <strong>séquences</strong>
+    en maintenant un état caché <em>h<sub>t</sub></em> qui encode l'information des tokens précédents.
+  </p>
+
+  <h4>RNN Simple</h4>
+  <div class="equation">
+    h<sub>t</sub> = tanh(W<sub>x</sub> x<sub>t</sub> + W<sub>h</sub> h<sub>t-1</sub> + b)
+    <span class="eq-label">(7)</span>
+  </div>
+  <div class="callout callout-red">
+    <div class="callout-title">Problème du RNN Simple : Gradient Vanishing</div>
+    Lors de la rétropropagation dans le temps (BPTT), le gradient est multiplié par la matrice
+    W<sub>h</sub> à chaque pas de temps. Si ||W<sub>h</sub>|| &lt; 1, le gradient tend vers 0
+    exponentiellement, rendant l'apprentissage de dépendances longues impossible.
+  </div>
+
+  <h4>LSTM — Long Short-Term Memory</h4>
+  <p>
+    Le LSTM (Hochreiter &amp; Schmidhuber, 1997) introduit une <strong>cellule mémoire</strong>
+    <em>c<sub>t</sub></em> et trois portes (gates) pour contrôler le flux d'information :
+  </p>
+  <div class="equation">
+    f<sub>t</sub> = σ(W<sub>f</sub>[h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>f</sub>) &nbsp;&nbsp;&nbsp; <em>[Porte d'oubli]</em>
+    <span class="eq-label">(8)</span>
+  </div>
+  <div class="equation">
+    i<sub>t</sub> = σ(W<sub>i</sub>[h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>i</sub>) &nbsp;&nbsp;&nbsp; <em>[Porte d'entrée]</em>
+    <span class="eq-label">(9)</span>
+  </div>
+  <div class="equation">
+    c<sub>t</sub> = f<sub>t</sub> ⊙ c<sub>t-1</sub> + i<sub>t</sub> ⊙ tanh(W<sub>c</sub>[h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>c</sub>)
+    <span class="eq-label">(10)</span>
+  </div>
+  <div class="equation">
+    h<sub>t</sub> = o<sub>t</sub> ⊙ tanh(c<sub>t</sub>) &nbsp;&nbsp;&nbsp; <em>[Porte de sortie]</em>
+    <span class="eq-label">(11)</span>
+  </div>
+
+  <div class="callout callout-green">
+    <div class="callout-title">Avantage LSTM : Gradient Highway</div>
+    La cellule mémoire <em>c<sub>t</sub></em> fournit un "autoroute" au gradient via la porte
+    d'oubli : <em>∂c<sub>t</sub>/∂c<sub>t-1</sub> = f<sub>t</sub></em>, ce qui peut être proche
+    de 1, permettant aux gradients de se propager sur des centaines de pas de temps.
+  </div>
+
+  <h4>GRU — Gated Recurrent Unit</h4>
+  <p>
+    Le GRU (Cho et al., 2014) est une simplification du LSTM avec seulement deux portes :
+    la <em>porte de mise à jour</em> et la <em>porte de réinitialisation</em>.
+  </p>
+  <div class="equation">
+    h<sub>t</sub> = (1 − z<sub>t</sub>) ⊙ h<sub>t-1</sub> + z<sub>t</sub> ⊙ g̃<sub>t</sub>
+    <span class="eq-label">(12)</span>
+  </div>
+  <p>
+    Le GRU offre un bon compromis : performances proches du LSTM avec 30 % de paramètres en moins.
+  </p>
+
+  <div class="page-footer">
+    <span>EMSI Casablanca — Projet Deep Learning 2025-2026</span>
+    <span>Page 8</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     CHAPTER IV — RNN/SEQ2SEQ  (page 2)
+============================================================ -->
+<div class="page">
+  <div class="running-head">
+    <span>CHAPITRE IV — RNN, LSTM, GRU ET SEQ2SEQ</span>
+    <span>A. LAFDAIGUI</span>
+  </div>
+
+  <h3>IV.3 Comparaison RNN / LSTM / GRU</h3>
+
+  <p class="table-caption"><strong>Tableau IV.2</strong> — Comparaison des modèles de langage sur Tatoeba</p>
+  <table>
+    <thead>
+      <tr><th>Modèle</th><th>Perplexité Finale</th><th>Paramètres</th><th>Stabilité</th><th>Remarque</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>RNN Simple</td><td class="negative">35–40</td><td>~100K</td><td>Faible</td><td>Gradient instable</td></tr>
+      <tr><td>LSTM</td><td class="metric">25–28</td><td>~140K</td><td>Excellente</td><td>Meilleure perplexité</td></tr>
+      <tr><td>GRU</td><td class="metric">26–30</td><td>~120K</td><td>Excellente</td><td>Bon compromis</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-blue">
+    <div class="callout-title">Perplexité</div>
+    La perplexité est la métrique standard des modèles de langage. Elle est définie comme
+    <em>PPL = exp(CE_loss)</em>. Une perplexité de 28 signifie que le modèle hésite en moyenne
+    entre 28 choix équiprobables pour chaque token — plus basse est la perplexité, meilleur est le modèle.
+  </div>
+
+  <h3>IV.4 Clip de Gradient</h3>
+
+  <p>
+    Dans les réseaux récurrents, le gradient peut exploser lors de la rétropropagation dans le temps.
+    Le <strong>gradient clipping</strong> est une technique de régularisation qui tronque le gradient
+    si sa norme dépasse un seuil maximal :
+  </p>
+
+  <div class="equation">
+    g ← g · (max_norm / ||g||)  si ||g|| > max_norm
+    <span class="eq-label">(13)</span>
+  </div>
+
+  <p>
+    Dans ce projet, <code>max_norm=5.0</code> est utilisé. Sans clip de gradient, les gradients
+    peuvent atteindre des valeurs de 10⁵ après seulement 50 batches, causant des mises à jour
+    catastophiques des poids.
+  </p>
+
+  <h3>IV.5 Architecture Seq2Seq (Encodeur-Décodeur)</h3>
+
+  <p>
+    L'architecture <strong>Sequence-to-Sequence</strong> (Sutskever et al., 2014) est composée
+    de deux réseaux récurrents : un <strong>encodeur</strong> qui lit la phrase source et la compresse
+    en un vecteur de contexte, et un <strong>décodeur</strong> qui génère la traduction en conditionnant
+    chaque token sur ce contexte.
+  </p>
+
+  <div class="arch-diagram">
+ENCODEUR (GRU)
+  ──────────────────────────────────────────────────────────────────
+  Entrée        : Phrase anglaise (B, T_src)
+  Embedding     : (B, T_src) → (B, T_src, E=128)
+  GRU           : (B, T_src, 128) → hidden (1, B, H=256)
+  ─────────────────────────────────────────────────────────────────
+  Vecteur contexte → c = h_T  ∈ ℝ^(1×B×256)
+  ─────────────────────────────────────────────────────────────────
+
+DÉCODEUR (GRU avec Teacher Forcing)
+  ──────────────────────────────────────────────────────────────────
+  Entrée init   : Token &lt;SOS&gt;  (B, 1)
+  Embedding     : (B, T_tgt) → (B, T_tgt, E=128)
+  GRU           : Initialisé avec c (état caché de l'encodeur)
+  Projection    : Linear(H=256 → V_fr=6500) → Logits (B, T_tgt, V)
+  Prédiction    : argmax(logits) ou échantillonnage avec température
+  ──────────────────────────────────────────────────────────────────
+
+GOULOT D'ÉTRANGLEMENT :
+  Toute la phrase source est compressée en un vecteur c ∈ ℝ^256
+  → Solution : mécanisme d'ATTENTION (Bahdanau 2015)</div>
+
+  <h4>Teacher Forcing</h4>
+  <p>
+    Pendant l'entraînement, au lieu de donner au décodeur sa propre prédiction précédente
+    (qui peut être erronée), on lui fournit le vrai token de référence. Ce mécanisme,
+    appelé <strong>Teacher Forcing</strong>, stabilise l'entraînement mais introduit un
+    <em>biais d'exposition</em> (<em>exposure bias</em>) : le modèle n'apprend pas à se
+    remettre de ses propres erreurs. La solution adoptée est de réduire progressivement
+    le ratio de teacher forcing :
+  </p>
+
+  <div class="equation">
+    tf_ratio = max(0.1, 0.5 × (1 − epoch / N_epochs))
+    <span class="eq-label">(14)</span>
+  </div>
+
+  <p class="table-caption"><strong>Tableau IV.3</strong> — Hyperparamètres du modèle Seq2Seq</p>
+  <table>
+    <thead>
+      <tr><th>Paramètre</th><th>Valeur</th><th>Justification</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Dimension embedding</td><td>128</td><td>Représentation compacte des tokens</td></tr>
+      <tr><td>Dimension cachée</td><td>256</td><td>Capacité suffisante pour phrases courtes</td></tr>
+      <tr><td>Nb. couches GRU</td><td>1</td><td>Complexité raisonnée pour dataset moyen</td></tr>
+      <tr><td>Dropout</td><td>0.3</td><td>Régularisation encodeur/décodeur</td></tr>
+      <tr><td>Batch size</td><td>128</td><td>Équilibre mémoire/stabilité gradient</td></tr>
+      <tr><td>Optimiseur</td><td>Adam (lr=5e-4)</td><td>Standard pour NLP</td></tr>
+      <tr><td>Scheduler</td><td>ReduceLROnPlateau</td><td>Réduit lr si val_loss stagne</td></tr>
+      <tr><td>Clip gradient</td><td>max_norm=5.0</td><td>Prévention gradient explosion</td></tr>
+      <tr><td>Epochs</td><td>15</td><td>Convergence complète</td></tr>
+      <tr><td>Perte</td><td>CrossEntropy masquée</td><td>Ignore les tokens &lt;PAD&gt;</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-footer">
+    <span>EMSI Casablanca — Projet Deep Learning 2025-2026</span>
+    <span>Page 9</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     CHAPTER IV — RNN/SEQ2SEQ  (page 3)
+============================================================ -->
+<div class="page">
+  <div class="running-head">
+    <span>CHAPITRE IV — RNN, LSTM, GRU ET SEQ2SEQ</span>
+    <span>A. LAFDAIGUI</span>
+  </div>
+
+  <h3>IV.6 Stratégies de Décodage</h3>
+
+  <p>
+    Une fois le modèle entraîné, plusieurs stratégies peuvent être utilisées pour générer
+    des traductions à partir des logits du décodeur.
+  </p>
+
+  <div class="two-col">
+    <div>
+      <h4>Greedy Decoding</h4>
+      <p>
+        À chaque pas de temps, on choisit le token de vocabulaire avec la probabilité la plus
+        haute. Cette approche est rapide (complexité <em>O(T)</em>) mais suboptimale : une décision
+        localement optimale peut mener à une phrase globalement mauvaise.
+      </p>
+      <div class="equation" style="font-size:10pt;">
+        ŷ<sub>t</sub> = argmax<sub>v</sub> P(v | ŷ<sub>&lt;t</sub>, c)
+      </div>
+    </div>
+    <div>
+      <h4>Beam Search (k=3)</h4>
+      <p>
+        On maintient <em>k=3</em> hypothèses candidates en parallèle. À chaque pas, on étend les
+        k meilleures hypothèses et on garde les k meilleures nouvelles. Complexité :
+        <em>O(k · T · |V|)</em>.
+      </p>
+      <div class="equation" style="font-size:10pt;">
+        score = log P + α · (|Y| / |X|)
+      </div>
+    </div>
+  </div>
+
+  <p>
+    Une <strong>pénalité de longueur</strong> (facteur α=0.7) est appliquée pour éviter le biais du
+    beam search vers les phrases courtes.
+  </p>
+
+  <h3>IV.7 Score BLEU et Résultats</h3>
+
+  <p>
+    Le score <strong>BLEU</strong> (Bilingual Evaluation Understudy, Papineni et al., 2002) est
+    la métrique standard d'évaluation de la traduction automatique. Il mesure le chevauchement
+    de n-grammes entre la traduction générée et la référence humaine.
+  </p>
+
+  <div class="equation">
+    BLEU = BP · exp(Σ<sub>n=1..4</sub> w<sub>n</sub> log p<sub>n</sub>)
+    <span class="eq-label">(15)</span>
+  </div>
+
+  <p>
+    où <em>BP</em> est la pénalité de brièveté (<em>brevity penalty</em>) et <em>p<sub>n</sub></em>
+    la précision des n-grammes (n=1..4 avec poids uniformes w<sub>n</sub> = 0.25).
+  </p>
+
+  <p class="table-caption"><strong>Tableau IV.4</strong> — Résultats de traduction sur 500 paires de test</p>
+  <table>
+    <thead>
+      <tr><th>Stratégie</th><th>Score BLEU</th><th>Perte Val.</th><th>Vitesse</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Greedy Decoding</td><td>0.15–0.22</td><td rowspan="2">2.8–3.2</td><td>Rapide</td></tr>
+      <tr><td>Beam Search (k=3)</td><td class="metric">0.18–0.25</td><td>Modérée</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-blue">
+    <div class="callout-title">Interprétation du Score BLEU</div>
+    Un score BLEU de 0.10–0.35 est considéré normal pour un modèle Seq2Seq sans attention sur un
+    dataset de taille modeste. Les systèmes de traduction professionnels (Google Translate, DeepL)
+    atteignent des scores de 0.40–0.60, grâce aux mécanismes d'attention, aux architectures Transformer
+    et à des corpus de milliards de paires de phrases.
+  </div>
+
+  <h4>Exemples de traductions générées</h4>
+
+  <table>
+    <thead>
+      <tr><th>Phrase anglaise</th><th>Référence française</th><th>Greedy</th><th>Beam Search (k=3)</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>"I am cold."</td>
+        <td>"J'ai froid ."</td>
+        <td>"je suis froid ."</td>
+        <td class="metric">"j'ai froid ."</td>
+      </tr>
+      <tr>
+        <td>"She is reading."</td>
+        <td>"Elle lit ."</td>
+        <td>"elle est lire ."</td>
+        <td class="metric">"elle lit ."</td>
+      </tr>
+      <tr>
+        <td>"Come here please."</td>
+        <td>"Viens ici s'il te plaît ."</td>
+        <td>"viens ici ."</td>
+        <td>"viens ici s'il te plaît ."</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>IV.8 Variantes GRU et Analyse</h3>
+
+  <p class="table-caption"><strong>Tableau IV.5</strong> — Comparaison des variantes GRU comme encodeur</p>
+  <table>
+    <thead>
+      <tr><th>Variante</th><th>Configuration</th><th>Perplexité</th><th>Paramètres</th><th>Remarque</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>GRU-1L (baseline)</td><td>1 couche, H=128</td><td>28.5</td><td>~100K</td><td>Référence</td></tr>
+      <tr><td>GRU-2L (empilé)</td><td>2 couches, H=128</td><td class="metric">25.3</td><td>~180K</td><td>Meilleures représentations</td></tr>
+      <tr><td>GRU-Bidirectionnel</td><td>1 couche, bi, H=128</td><td class="metric">24.8</td><td>~190K</td><td>Contexte gauche+droite</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-orange">
+    <div class="callout-title">Attention : GRU Bidirectionnel pour l'encodeur uniquement</div>
+    Un encodeur bidirectionnel lit la phrase dans les deux sens (gauche→droite et droite→gauche)
+    ce qui améliore la qualité des représentations. Cependant, un <strong>décodeur ne peut pas être
+    bidirectionnel</strong> car il génère les tokens de manière causale (il ne connaît pas les tokens futurs).
+  </div>
+
+  <div class="page-footer">
+    <span>EMSI Casablanca — Projet Deep Learning 2025-2026</span>
+    <span>Page 10</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     CHAPTER V — COMPARATIVE ANALYSIS
+============================================================ -->
+<div class="page">
+  <div class="running-head">
+    <span>CHAPITRE V — ANALYSE COMPARATIVE DES ARCHITECTURES</span>
+    <span>A. LAFDAIGUI</span>
+  </div>
+
+  <div class="chapter-header">
+    <div class="chapter-num">Chapitre V</div>
+    <h2>Analyse Comparative des Architectures</h2>
+    <div class="chapter-sub">MLP vs CNN vs RNN/Seq2Seq — Biais Inductifs et Domaines d'Application</div>
+  </div>
+
+  <h3>V.1 Tableau de Synthèse Global</h3>
+
+  <p class="table-caption"><strong>Tableau V.1</strong> — Synthèse des trois parties du projet</p>
+  <table>
+    <thead>
+      <tr><th>Critère</th><th>Partie 1 — MLP</th><th>Partie 2 — CNN</th><th>Partie 3 — RNN/Seq2Seq</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Dataset</td><td>Wine Quality (178 éch.)</td><td>MNIST (70K images)</td><td>Tatoeba (20K paires)</td></tr>
+      <tr><td>Tâche</td><td>Classification 3 classes</td><td>Classification 10 classes</td><td>Traduction EN→FR</td></tr>
+      <tr><td>Architecture</td><td>MLP [64, 32]</td><td>LeNet-5 + ReLU/MaxPool</td><td>Seq2Seq (GRU, H=256)</td></tr>
+      <tr><td>Paramètres</td><td>~5 500</td><td>61 706</td><td>~1 000 000</td></tr>
+      <tr><td>Époques</td><td>100</td><td>10</td><td>15</td></tr>
+      <tr><td>Métrique principale</td><td>Accuracy (91 %)</td><td>Accuracy (98.5 %)</td><td>BLEU (0.22)</td></tr>
+      <tr><td>Biais inductif</td><td>Aucun</td><td>Localité spatiale</td><td>Causalité temporelle</td></tr>
+      <tr><td>Optimiseur</td><td>Adam (lr=1e-3)</td><td>Adam (lr=1e-3)</td><td>Adam (lr=5e-4)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>V.2 Comparaison des Biais Inductifs</h3>
+
+  <p>
+    Le concept central unificateur des trois architectures est le <strong>biais inductif</strong>
+    (<em>inductive bias</em>) : l'ensemble des hypothèses implicites encodées dans l'architecture
+    du modèle sur la structure des données. Un bon biais inductif améliore la généralisation
+    en réduisant l'espace des fonctions que le modèle doit explorer.
+  </p>
+
+  <p class="table-caption"><strong>Tableau V.2</strong> — Comparaison des biais inductifs</p>
+  <table>
+    <thead>
+      <tr><th>Dimension</th><th>MLP</th><th>CNN</th><th>RNN/Seq2Seq</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Structure des données</td><td>Vecteur plat</td><td>Grille 2D (images)</td><td>Séquence ordonnée</td></tr>
+      <tr><td>Invariance</td><td>Aucune</td><td>Translation spatiale</td><td>Ordre temporel</td></tr>
+      <tr><td>Opération centrale</td><td>Produit matriciel</td><td>Convolution 2D</td><td>Récurrence d'état</td></tr>
+      <tr><td>Partage de paramètres</td><td>Non</td><td>Oui (par filtre)</td><td>Oui (par pas de temps)</td></tr>
+      <tr><td>Complexité mémoire</td><td>O(n²)</td><td>O(n · k²)</td><td>O(T · H)</td></tr>
+      <tr><td>Limite principale</td><td>Aucune structure</td><td>Dépendances longue portée</td><td>Vecteur contexte fixe</td></tr>
+      <tr><td>Extension naturelle</td><td>Résidual Networks</td><td>Vision Transformer</td><td>Attention → Transformer</td></tr>
+    </tbody>
+  </table>
+
+  <h3>V.3 Quand Utiliser Quelle Architecture ?</h3>
+
+  <div class="step-box">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <strong>MLP (Données tabulaires) :</strong> Features indépendantes sans structure spatiale ou temporelle —
+      données cliniques, financières, enquêtes. Préférer les méthodes ensemblistes (XGBoost, Random Forest)
+      pour les faibles volumes de données.
+    </div>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <strong>CNN (Vision par ordinateur) :</strong> Images, vidéos, signaux 1D (audio, ECG). La structure
+      spatiale locale est exploitée par la convolution. Pour les tâches à longue portée : Vision Transformer.
+    </div>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <strong>RNN/LSTM/GRU (Séquences) :</strong> Texte, audio, séries temporelles, génomique.
+      Pour des séquences longues ou des tâches NLP complexes : Transformer (BERT, GPT, T5).
+    </div>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <strong>Seq2Seq (Transduction de séquences) :</strong> Traduction, résumé automatique, génération
+      de code, réponse aux questions. L'attention et les Transformers ont supplanté les Seq2Seq purs
+      pour la majorité des tâches NLP modernes.
+    </div>
+  </div>
+
+  <h3>V.4 Évolution vers les Architectures Modernes</h3>
+
+  <p>
+    Les trois architectures étudiées dans ce projet constituent la base sur laquelle reposent les
+    modèles d'IA les plus avancés d'aujourd'hui. Le goulot d'étranglement identifié dans la partie 3
+    (vecteur de contexte fixe) a motivé le développement du mécanisme d'attention, puis l'architecture
+    Transformer, qui constitue aujourd'hui le fondement de GPT-4, Claude, Gemini et tous les grands
+    modèles de langage.
+  </p>
+
+  <div class="arch-diagram">
+MLP (1958, Rosenblatt)
+  └─► CNN (1998, LeCun) ─────────────────────────────────────────────► ViT (2020)
+        └─► RNN (1986) ─► LSTM (1997) ─► Seq2Seq (2014)
+                                              └─► Attention (2015)
+                                                    └─► Transformer (2017)
+                                                          ├─► BERT (2018)
+                                                          ├─► GPT-2/3/4 (2019–2023)
+                                                          └─► Claude, Gemini (2023–2025)</div>
+
+  <div class="page-footer">
+    <span>EMSI Casablanca — Projet Deep Learning 2025-2026</span>
+    <span>Page 11</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     CHAPTER VI — CONCLUSION
+============================================================ -->
+<div class="page">
+  <div class="running-head">
+    <span>CHAPITRE VI — CONCLUSION ET PERSPECTIVES</span>
+    <span>A. LAFDAIGUI</span>
+  </div>
+
+  <div class="chapter-header">
+    <div class="chapter-num">Chapitre VI</div>
+    <h2>Conclusion et Perspectives</h2>
+    <div class="chapter-sub">Bilan des apprentissages et voies d'amélioration</div>
+  </div>
+
+  <h3>VI.1 Bilan du Projet</h3>
+
+  <p>
+    Ce projet a permis de maîtriser les trois piliers fondamentaux du Deep Learning moderne à travers
+    une approche progressive et rigoureuse. En partant du modèle le plus simple (MLP) pour aller vers
+    les architectures les plus complexes (Seq2Seq), nous avons pu observer et comprendre empiriquement
+    les avantages et limites de chaque paradigme.
+  </p>
+
+  <p>
+    Les objectifs pédagogiques ont été pleinement atteints : maîtrise de PyTorch, compréhension des
+    mécanismes de rétropropagation, implémentation d'études ablatives rigoureuses, et analyse critique
+    des résultats. Les performances obtenues — <span class="metric">91 % sur Wine Quality</span>,
+    <span class="metric">98.5 % sur MNIST</span> et <span class="metric">BLEU=0.22 sur Tatoeba</span> —
+    sont cohérentes avec l'état de l'art pour ces configurations expérimentales.
+  </p>
+
+  <h3>VI.2 Compétences Acquises</h3>
+
+  <div class="two-col">
+    <div>
+      <h5>Compétences techniques</h5>
+      <ul>
+        <li>Conception et implémentation de <code>nn.Module</code></li>
+        <li>Pipelines train/val/test sans data leakage</li>
+        <li>Initialisation des poids (Xavier/Glorot)</li>
+        <li>Régularisation : Dropout, BatchNorm, L2</li>
+        <li>Planification du taux d'apprentissage</li>
+        <li>Sérialisation de modèles (<code>state_dict</code>)</li>
+        <li>Évaluation : Accuracy, F1, BLEU, Perplexité</li>
+        <li>Visualisation : filtres, cartes features</li>
+      </ul>
+    </div>
+    <div>
+      <h5>Compétences conceptuelles</h5>
+      <ul>
+        <li>Biais inductif vs flexibilité</li>
+        <li>Gradient vanishing/exploding</li>
+        <li>Teacher forcing &amp; exposure bias</li>
+        <li>Beam search vs greedy decoding</li>
+        <li>Ablation study comme outil d'analyse</li>
+        <li>Trade-off paramètres/performance</li>
+        <li>Métriques adaptées à chaque tâche</li>
+        <li>Évolution historique des architectures</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>VI.3 Limites et Pistes d'Amélioration</h3>
+
+  <h4>Partie 1 — MLP / Wine Quality</h4>
+  <ul>
+    <li><strong>Dataset trop petit :</strong> 178 échantillons limitent la généralisation.
+    Augmentation de données ou cross-validation k-fold permettraient une évaluation plus robuste.</li>
+    <li><strong>Alternatives :</strong> XGBoost ou Random Forest atteignent généralement
+    de meilleures performances sur des données tabulaires de petite taille.</li>
+  </ul>
+
+  <h4>Partie 2 — CNN / MNIST</h4>
+  <ul>
+    <li><strong>Architecture moderne :</strong> ResNet-18 ou EfficientNet atteindrait 99.5 % sur MNIST.</li>
+    <li><strong>Data augmentation :</strong> Rotation, zoom, déplacement aléatoire amélioreraient
+    la robustesse aux variantes d'écriture.</li>
+    <li><strong>Dataset plus difficile :</strong> CIFAR-10 ou ImageNet pour tester les limites de LeNet-5.</li>
+  </ul>
+
+  <h4>Partie 3 — RNN/Seq2Seq</h4>
+  <ul>
+    <li><strong>Mécanisme d'attention :</strong> L'attention de Bahdanau (2015) permettrait au décodeur
+    d'interroger tous les états cachés de l'encodeur, éliminant le goulot du vecteur contexte fixe.</li>
+    <li><strong>Architecture Transformer :</strong> Le "Attention is All You Need" (Vaswani 2017) supplanterait
+    entièrement les RNNs en permettant la parallélisation complète de l'entraînement.</li>
+    <li><strong>Corpus plus large :</strong> 1M+ paires de phrases pour atteindre des scores BLEU >0.35.</li>
+    <li><strong>Subword tokenization :</strong> BPE (Byte Pair Encoding) ou SentencePiece pour gérer
+    les mots hors vocabulaire (&lt;UNK&gt;).</li>
+  </ul>
+
+  <h3>VI.4 Perspectives</h3>
+
+  <p>
+    Ce projet constitue une base solide pour aborder les architectures modernes. La prochaine étape
+    naturelle est l'étude du <strong>mécanisme d'attention</strong> et des <strong>Transformers</strong>,
+    qui révolutionnent non seulement le NLP mais aussi la vision par ordinateur (ViT), l'audio (Whisper),
+    la biologie computationnelle (AlphaFold) et bien d'autres domaines.
+  </p>
+
+  <div class="callout callout-green">
+    <div class="callout-title">Message final</div>
+    Comprendre profondément les MLP, CNN et RNN est indispensable pour quiconque souhaite maîtriser
+    les architectures modernes. Un ingénieur qui implémente un Transformer sans comprendre la
+    rétropropagation, le biais inductif et les mécanismes de gate ne pourra ni déboguer ses modèles
+    ni les améliorer de manière raisonnée. Ce projet a posé ces fondations essentielles.
+  </div>
+
+  <div class="page-footer">
+    <span>EMSI Casablanca — Projet Deep Learning 2025-2026</span>
+    <span>Page 12</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     CHAPTER VII — REFERENCES
+============================================================ -->
+<div class="page">
+  <div class="running-head">
+    <span>CHAPITRE VII — RÉFÉRENCES BIBLIOGRAPHIQUES</span>
+    <span>A. LAFDAIGUI</span>
+  </div>
+
+  <div class="chapter-header">
+    <div class="chapter-num">Chapitre VII</div>
+    <h2>Références Bibliographiques</h2>
+  </div>
+
+  <h3>Articles Fondateurs</h3>
+  <ol>
+    <li style="margin-bottom:10px;">
+      <strong>LeCun, Y., Bottou, L., Bengio, Y., &amp; Haffner, P.</strong> (1998).
+      Gradient-based learning applied to document recognition.
+      <em>Proceedings of the IEEE</em>, 86(11), 2278–2324.
+      [Architecture LeNet-5]
+    </li>
+    <li style="margin-bottom:10px;">
+      <strong>Hochreiter, S., &amp; Schmidhuber, J.</strong> (1997).
+      Long short-term memory.
+      <em>Neural Computation</em>, 9(8), 1735–1780.
+      [Architecture LSTM]
+    </li>
+    <li style="margin-bottom:10px;">
+      <strong>Cho, K., van Merrienboer, B., Gulcehre, C., et al.</strong> (2014).
+      Learning phrase representations using RNN encoder-decoder for statistical machine translation.
+      <em>EMNLP 2014</em>.
+      [Architecture GRU &amp; Seq2Seq]
+    </li>
+    <li style="margin-bottom:10px;">
+      <strong>Sutskever, I., Vinyals, O., &amp; Le, Q. V.</strong> (2014).
+      Sequence to sequence learning with neural networks.
+      <em>NIPS 2014</em>.
+      [Seq2Seq avec LSTM]
+    </li>
+    <li style="margin-bottom:10px;">
+      <strong>Bahdanau, D., Cho, K., &amp; Bengio, Y.</strong> (2015).
+      Neural machine translation by jointly learning to align and translate.
+      <em>ICLR 2015</em>.
+      [Mécanisme d'attention — étape suivante]
+    </li>
+    <li style="margin-bottom:10px;">
+      <strong>Vaswani, A., Shazeer, N., Parmar, N., et al.</strong> (2017).
+      Attention is all you need.
+      <em>NIPS 2017</em>.
+      [Architecture Transformer]
+    </li>
+    <li style="margin-bottom:10px;">
+      <strong>Glorot, X., &amp; Bengio, Y.</strong> (2010).
+      Understanding the difficulty of training deep feedforward neural networks.
+      <em>AISTATS 2010</em>.
+      [Initialisation Xavier/Glorot]
+    </li>
+    <li style="margin-bottom:10px;">
+      <strong>Papineni, K., Roukos, S., Ward, T., &amp; Zhu, W.-J.</strong> (2002).
+      BLEU: A method for automatic evaluation of machine translation.
+      <em>ACL 2002</em>.
+      [Score BLEU]
+    </li>
+  </ol>
+
+  <h3>Ressources Techniques</h3>
+  <ol start="9">
+    <li style="margin-bottom:8px;">
+      <strong>PyTorch Documentation</strong> (2024).
+      <em>PyTorch 2.0 Official Documentation</em>. pytorch.org
+    </li>
+    <li style="margin-bottom:8px;">
+      <strong>Goodfellow, I., Bengio, Y., &amp; Courville, A.</strong> (2016).
+      <em>Deep Learning</em>. MIT Press. deeplearningbook.org
+    </li>
+    <li style="margin-bottom:8px;">
+      <strong>LeCun, Y., Bengio, Y., &amp; Hinton, G.</strong> (2015).
+      Deep learning.
+      <em>Nature</em>, 521(7553), 436–444.
+    </li>
+    <li style="margin-bottom:8px;">
+      <strong>Tatoeba Project</strong> (2024).
+      Sentence pairs database (eng-fra).
+      tatoeba.org
+    </li>
+    <li style="margin-bottom:8px;">
+      <strong>Deng, L.</strong> (2012).
+      The MNIST database of handwritten digit images for machine learning research.
+      <em>IEEE Signal Processing Magazine</em>, 29(6), 141–142.
+    </li>
+  </ol>
+
+  <hr class="section-divider"/>
+
+  <h3>Annexes</h3>
+
+  <h4>Annexe A — Environnement d'Exécution</h4>
+  <table>
+    <thead>
+      <tr><th>Composant</th><th>Version</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Python</td><td>3.10+</td></tr>
+      <tr><td>PyTorch</td><td>2.0.0+</td></tr>
+      <tr><td>torchvision</td><td>0.15.0+</td></tr>
+      <tr><td>scikit-learn</td><td>1.3.0+</td></tr>
+      <tr><td>NLTK</td><td>3.8.0+</td></tr>
+      <tr><td>NumPy</td><td>1.24.0+</td></tr>
+      <tr><td>Pandas</td><td>2.0.0+</td></tr>
+      <tr><td>Matplotlib</td><td>3.7.0+</td></tr>
+      <tr><td>Seaborn</td><td>0.12.0+</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Annexe B — Commandes d'Installation</h4>
+  <div class="code-block"><span class="cm"># Créer un environnement virtuel</span>
+<span class="kw">python</span> -m venv .venv
+<span class="kw">source</span> .venv/bin/activate  <span class="cm"># Linux/Mac</span>
+.venv\Scripts\activate     <span class="cm"># Windows</span>
+
+<span class="cm"># Installer les dépendances</span>
+<span class="kw">pip</span> install -r requirements.txt
+
+<span class="cm"># Générer les notebooks</span>
+<span class="kw">python</span> generate_notebooks.py
+
+<span class="cm"># Lancer Jupyter</span>
+<span class="kw">jupyter</span> notebook partie1_MLP.ipynb</div>
+
+  <div style="margin-top: 30px; text-align: center; font-size: 9pt; color: #888; border-top: 1pt solid #e0e0e0; padding-top: 16px;">
+    <p>
+      Rapport réalisé par <strong>Ayoub Lafdaigui</strong> — EMSI Casablanca<br/>
+      Projet Deep Learning 2025-2026 — Juin 2026<br/>
+      <em>Pour exporter en PDF : Ctrl+P (ou Cmd+P) → « Enregistrer en PDF »</em>
+    </p>
+  </div>
+
+  <div class="page-footer">
+    <span>EMSI Casablanca — Projet Deep Learning 2025-2026</span>
+    <span>Page 13</span>
+  </div>
+</div>
+
+</body>
+</html>
